@@ -49,7 +49,7 @@ class Card:
         self.index_bild = header.index("Bild")
 
         self.SVM_ID = ""
-        self.antal = "1"
+        self.antal = None
         self.namn = None
         self.exp = None
         self.skick = "n/a"
@@ -64,24 +64,27 @@ class Card:
         self.kommentar = ""
         self.bild = ""
 
-    def setup(self, csv_row):
-        self.SVM_ID = csv_row[self.index_SVM_ID] if self.index_SVM_ID else self.SVM_ID
-        self.antal = csv_row[self.index_antal] if self.index_antal else self.antal
-        self.namn = csv_row[self.index_namn] if self.index_namn else self.namn
-        self.exp = csv_row[self.index_exp] if self.index_exp else self.exp
-        self.skick = csv_row[self.index_skick] if self.index_skick else self.skick
-        self.sprak = csv_row[self.index_sprak] if self.index_sprak else self.sprak
-        self.signerad = csv_row[self.index_signerad] if self.index_signerad else self.signerad
-        self.foil = csv_row[self.index_foil] if self.index_foil else self.foil
-        self.for_byte = csv_row[self.index_for_byte] if self.index_for_byte else self.for_byte
-        self.for_salj = csv_row[self.index_for_salj] if self.index_for_salj else self.for_salj
-        self.dold = csv_row[self.index_dold] if self.index_dold else self.dold
-        self.pris = float(csv_row[self.index_pris]) if self.index_pris else self.pris
-        self.valuta = csv_row[self.index_valuta] if self.index_valuta else self.valuta
-        self.kommentar = csv_row[self.index_kommentar] if self.index_kommentar else self.kommentar
-        self.bild = csv_row[self.index_bild] if self.index_bild else self.bild
+    @staticmethod
+    def _get_item_from_row(csv_row, index, default):
+        return csv_row[index] if index is not None else default
 
-        self.antal = int(self.antal.replace("x", "")) if self.antal else "1"
+    def setup(self, csv_row):
+        self.SVM_ID = self._get_item_from_row(csv_row, self.index_SVM_ID, self.SVM_ID)
+        self.antal = int(self._get_item_from_row(csv_row, self.index_antal, self.antal).replace("x", ""))
+        self.namn = self._get_item_from_row(csv_row, self.index_namn, self.namn)
+        self.exp = self._get_item_from_row(csv_row, self.index_exp, self.exp)
+        self.skick = self._get_item_from_row(csv_row, self.index_skick, self.skick)
+        self.sprak = self._get_item_from_row(csv_row, self.index_sprak, self.sprak)
+        self.signerad = self._get_item_from_row(csv_row, self.index_signerad, self.signerad)
+        self.foil = self._get_item_from_row(csv_row, self.index_foil, self.foil)
+        self.for_byte = self._get_item_from_row(csv_row, self.index_for_byte, self.for_byte)
+        self.for_salj = self._get_item_from_row(csv_row, self.index_for_salj, self.for_salj)
+        self.dold = self._get_item_from_row(csv_row, self.index_dold, self.dold)
+        self.pris = self._get_item_from_row(csv_row, self.index_pris, self.pris)
+        self.valuta = self._get_item_from_row(csv_row, self.index_valuta, self.valuta)
+        self.kommentar = self._get_item_from_row(csv_row, self.index_kommentar, self.kommentar)
+        self.bild = self._get_item_from_row(csv_row, self.index_bild, self.SVM_ID)
+
         self.skick = self.skick if self.skick else "n/a"
         self.sprak = self.sprak if self.sprak else "n/a"
         self.signerad = self.signerad if self.signerad else "Nej"
@@ -131,7 +134,7 @@ class Card:
         if self.exp is None:
             raise ValueError(f"Kortet måste ha ett expansion")
 
-    def row(self, antal=None):
+    def row(self, overwrite_antal=None):
         exp = TRANSLATION_DATA["expansion_name"][self.exp] if self.exp in TRANSLATION_DATA["expansion_name"] else self.exp
         namn = TRANSLATION_DATA["card_name"][self.namn] if self.namn in TRANSLATION_DATA["card_name"] else self.namn
 
@@ -140,7 +143,7 @@ class Card:
         if exp in ["Throne of Eldraine"]:
             namn = namn.split("//")[0].strip()
 
-        return [self.SVM_ID, antal if antal else self.antal, namn, exp, self.skick, self.sprak, self.signerad, self.foil,
+        return [self.SVM_ID, overwrite_antal if overwrite_antal else self.antal, namn, exp, self.skick, self.sprak, self.signerad, self.foil,
                 self.for_byte, self.for_salj, self.dold, int(self.pris), self.valuta, self.kommentar, self.bild]
 
 
@@ -173,6 +176,6 @@ class SVM:
             for card in self.cards:
                 if self.expand:
                     for _ in range(card.antal):
-                        writer.writerow(card.row(antal=1))
+                        writer.writerow(card.row(1))
                 else:
                     writer.writerow(card.row())
