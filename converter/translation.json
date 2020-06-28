@@ -9,6 +9,7 @@
     "Duel Decks: Blessed vs. Cursed": "Duel Decks: Blessed vs Cursed",
     "Duel Decks: Elspeth vs. Tezzeret": "Duel Decks: Elspeth vs Tezzeret",
     "Duel Decks: Elspeth vs. Kiora": "Duel Decks: Elspeth vs Kiora",
+    "Duel Decks: Elves vs. Inventors": "Duel Decks: Elves vs Inventors",
     "Duel Decks: Heroes vs. Monsters": "Duel Decks: Heroes vs Monsters",
     "Duel Decks: Izzet vs. Golgari": "Duel Decks: Izzet vs Golgari",
     "Duel Decks: Speed vs. Cunning": "Duel Decks: Speed vs Cunning",
@@ -23,30 +24,44 @@
     "Duel Decks: Phyrexia vs. the Coalition": "Duel Decks: Phyrexia vs The Coalition",
 
     "Theros Beyond Death": "Theros: Beyond Death",
-    "Modern Event Deck 2014": "Modern Event Deck",
 
-    "Core 2020": "Core Set 2020",
-    "Core Set 2020 Promos": "Core Set 2020",
+    "Modern Event Deck 2014": "Modern Event Deck",
     "Commander 2011": "Commander",
+
     "Ravnica: City of Guilds": "Ravnica",
 
     "GRN Guild Kit": "Guilds of Ravnica Guild Kits",
     "RNA Guild Kit": "Ravnica Allegiance Guild Kits",
 
     "Fourth Edition": "4th Edition",
+    "Fifth Edition": "5th Edition",
+    "Sixth Edition": "6th Edition",
     "Seventh Edition": "7th Edition",
+    "Eight Edition": "8th Edition",
     "Ninth Edition": "9th Edition",
     "Tenth Edition": "10th Edition",
+
+    "Core 2020": "Core Set 2020",
+    "Core Set 2020 Promos": "Core Set 2020",
+
     "Friday Night Magic 2016": "Friday Night Magic Promos",
 
     "M19 Gift Pack": "Core Set 2019",
+
     "Magic 2015 Promos": "Release",
     "Magic Origins Promos": "Release",
-    "Theros Promos": "Specialare",
-    "Dominaria Promos": "Prerelease",
-    "Resale Promos": "Walmart/Target Promos",
     "Journey into Nyx Promos": "Release",
+
+    "Theros Promos": "Specialare",
+
+    "Dominaria Promos": "Prerelease",
+    "Ikoria: Lair of Behemoths Promos": "Prerelease",
     "Shadows over Innistrad Promos": "Prerelease",
+
+    "Magic Player Rewards 2011": "Player Rewards",
+
+    "Resale Promos": "Walmart/Target Promos",
+
     "Mystery Booster Retail Edition Foils": "Mystery Booster",
 
     "Commander Anthology Volume II": "Commander Anthology 2018",
