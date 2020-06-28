@@ -2,10 +2,11 @@ from pathlib import Path
 import json
 import csv
 
-__all__ = ["SVM", "DEFAULT_HEADER", "SVM_HEADER"]
+__all__ = ["SVM", "DEFAULT_HEADER", "SVM_HEADER", "SVM_DEFAULT"]
 
 DEFAULT_HEADER = ("Antal", "Namn", "Exp", "Foil", "Skick", "Pris")
 SVM_HEADER = ["SVM ID", "Antal", "Namn", "Exp", "Skick", "Språk", "Signerad", "Foil", "För Byte", "För Sälj", "Dold", "Pris", "Valuta", "Kommentar", "Bild"]
+SVM_DEFAULT = ["", None, None, None, "n/a", "n/a", "Nej", "Nej", "Nej", "Nej", "Ja", None, "SEK", "", ""]
 
 
 def __load(path):
@@ -48,21 +49,24 @@ class Card:
         self.index_kommentar = header.index("Kommentar")
         self.index_bild = header.index("Bild")
 
-        self.SVM_ID = ""
-        self.antal = None
-        self.namn = None
-        self.exp = None
-        self.skick = "n/a"
-        self.sprak = "n/a"
-        self.signerad = "Nej"
-        self.foil = "Nej"
-        self.for_byte = "Nej"
-        self.for_salj = "Nej"
-        self.dold = "Ja"
-        self.pris = "0"
-        self.valuta = "SEK"
-        self.kommentar = ""
-        self.bild = ""
+        if not len(SVM_HEADER) == len(SVM_DEFAULT):
+            raise ValueError("'SVM_DEFAULT' is not of the expected length")
+
+        self.SVM_ID = SVM_DEFAULT[0]
+        self.antal = SVM_DEFAULT[1]
+        self.namn = SVM_DEFAULT[2]
+        self.exp = SVM_DEFAULT[3]
+        self.skick = SVM_DEFAULT[4]
+        self.sprak = SVM_DEFAULT[5]
+        self.signerad = SVM_DEFAULT[6]
+        self.foil = SVM_DEFAULT[7]
+        self.for_byte = SVM_DEFAULT[8]
+        self.for_salj = SVM_DEFAULT[9]
+        self.dold = SVM_DEFAULT[10]
+        self.pris = SVM_DEFAULT[11]
+        self.valuta = SVM_DEFAULT[12]
+        self.kommentar = SVM_DEFAULT[13]
+        self.bild = SVM_DEFAULT[14]
 
     @staticmethod
     def _get_item_from_row(csv_row, index, default):
@@ -164,7 +168,7 @@ class SVM:
             for row in reader:
                 for index, con in enumerate(converters):
                     if con:
-                        row[index] = con(row[index])
+                        row[index] = con(index, row)
                 card = Card(header)
                 card.setup(row)
                 self.cards.append(card)
