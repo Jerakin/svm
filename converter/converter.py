@@ -2,11 +2,21 @@ from pathlib import Path
 import json
 import csv
 
-__all__ = ["SVM", "DEFAULT_HEADER", "SVM_HEADER", "SVM_DEFAULT"]
+__all__ = ["SVM", "INPUT_CSV_HEADER", "SVM_HEADER", "SVM_DEFAULT"]
 
-DEFAULT_HEADER = ("Antal", "Namn", "Exp", "Foil", "Skick", "Pris")
+# The expected/default header of the input CSV
+INPUT_CSV_HEADER = ("Antal", "Namn", "Exp", "Foil", "Skick", "Pris")
+
+# The expected header on SVM
 SVM_HEADER = ["SVM ID", "Antal", "Namn", "Exp", "Skick", "Språk", "Signerad", "Foil", "För Byte", "För Sälj", "Dold", "Pris", "Valuta", "Kommentar", "Bild"]
 SVM_DEFAULT = ["", None, None, None, "n/a", "n/a", "Nej", "Nej", "Nej", "Nej", "Ja", None, "SEK", "", ""]
+
+# Valid entries in CSV
+_LANGUAGES = ['n/a', 'Engelska', 'Italienska', 'Franska', 'Tyska', 'Spanska', 'Portugisiska', 'Ryska', 'Japanska',
+              'Koreanska', 'F. Kinesiska', 'T. Kinesiska']
+_QUALITY = ['n/a', 'Near Mint', 'Excellent', 'Good', 'Fine', 'Poor']
+_BOOL = ["Ja", "Nej"]
+_CURRENCY = ['SEK', 'DKK', "NOK"]
 
 
 def __load(path):
@@ -31,7 +41,7 @@ class HeaderList:
 
 
 class Card:
-    def __init__(self, header=DEFAULT_HEADER):
+    def __init__(self, header=INPUT_CSV_HEADER):
         header = HeaderList(header)
         self.index_SVM_ID = header.index("SVM ID")
         self.index_antal = header.index("Antal")
@@ -102,23 +112,23 @@ class Card:
         self.validate()
 
     def validate(self):
-        if self.skick not in ['n/a', 'Near Mint', 'Excellent', 'Good', 'Fine', 'Poor']:
-            raise ValueError(f"Skick '{self.skick}' is not valid")
+        if self.skick not in _QUALITY:
+            raise ValueError(f"Skick '{self.skick}' är inte giltig, måste vara en utav [{', '.join(_QUALITY)}]")
 
-        if self.sprak not in ['n/a','Engelska','Italienska','Franska','Tyska','Spanska','Portugisiska','Ryska','Japanska','Koreanska','F. Kinesiska','T. Kinesiska']:
-            raise ValueError(f"Språk '{self.sprak}' is not valid")
+        if self.sprak not in _LANGUAGES:
+            raise ValueError(f"Språk '{self.sprak}' är inte giltig, måste vara en utav [{', '.join(_LANGUAGES)}]")
 
-        if self.foil not in ['Ja', 'Nej']:
-            raise ValueError(f"Foil '{self.foil}' is not valid")
+        if self.foil not in _BOOL:
+            raise ValueError(f"Foil '{self.foil}' är inte giltig, måste vara en utav [{', '.join(_BOOL)}]")
 
-        if self.for_byte not in ['Ja', 'Nej']:
-            raise ValueError(f"För Byte '{self.for_byte}' is not valid")
+        if self.for_byte not in _BOOL:
+            raise ValueError(f"För Byte '{self.for_byte}' är inte giltig, måste vara en utav [{', '.join(_BOOL)}]")
 
-        if self.for_salj not in ['Ja', 'Nej']:
-            raise ValueError(f"För Sälj '{self.for_salj}' is not valid")
+        if self.for_salj not in _BOOL:
+            raise ValueError(f"För Sälj '{self.for_salj}' är inte giltig, måste vara en utav [{', '.join(_BOOL)}]")
 
-        if self.signerad not in ['Ja', 'Nej']:
-            raise ValueError(f"Signerad '{self.signerad}' is not valid")
+        if self.signerad not in _BOOL:
+            raise ValueError(f"Signerad '{self.signerad}' är inte giltig, måste vara en utav [{', '.join(_BOOL)}]")
 
         if not float(self.pris).is_integer():
             raise ValueError(f"Pris måste vara i hela Kronor")
@@ -129,8 +139,8 @@ class Card:
         if self.for_salj == 'Ja' and self.pris == 0:
             raise TypeError(f"För Sälj kan bara vara 'Ja' ifall 'Pris' är mer än 0")
 
-        if self.valuta not in ['SEK', 'DKK', "NOK"]:
-            raise ValueError(f"Valuta '{self.valuta}' is not valid")
+        if self.valuta not in _CURRENCY:
+            raise ValueError(f"Valuta '{self.valuta}' är inte giltig, måste vara en utav [{', '.join(_CURRENCY)}]")
 
         if self.namn is None:
             raise ValueError(f"Kortet måste ha ett namn")
@@ -142,8 +152,8 @@ class Card:
         exp = TRANSLATION_DATA["expansion_name"][self.exp] if self.exp in TRANSLATION_DATA["expansion_name"] else self.exp
         namn = TRANSLATION_DATA["card_name"][self.namn] if self.namn in TRANSLATION_DATA["card_name"] else self.namn
 
-        # Dual cards in Throne of Eldraine that by convention use // does not do so on SVM
-        # But only uses the first of the cards name
+        # Dual cards in Throne of Eldraine that by convention use // does not do so on SVM, they only uses
+        # the first part of the cards name
         if exp in ["Throne of Eldraine"]:
             namn = namn.split("//")[0].strip()
 
@@ -152,7 +162,7 @@ class Card:
 
 
 class SVM:
-    def __init__(self, input_csv, expand_antal=True, header=DEFAULT_HEADER, converters=()):
+    def __init__(self, input_csv, expand_antal=True, header=INPUT_CSV_HEADER, converters=()):
         self.cards = []
         self.expand = expand_antal
 
