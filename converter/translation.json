@@ -3,7 +3,8 @@
     "Tobita, Master of Winds": "Student of Elements",
     "It That Rides as One": "Lone Rider",
     "El-Hajjâj": "El-Hajjaj",
-    "Take into Custody": "Take Into Custody"
+    "Take into Custody": "Take Into Custody",
+    "Mechagodzilla, Battle Fortress": "Hangarback Walker"
   },
   "expansion_name": {
     "Duel Decks: Blessed vs. Cursed": "Duel Decks: Blessed vs Cursed",
@@ -22,6 +23,7 @@
     "Duel Decks: Sorin vs. Tibalt": "Duel Decks: Sorin vs Tibalt",
     "Duel Decks: Jace vs. Vraska": "Duel Decks: Jace vs Vraska",
     "Duel Decks: Phyrexia vs. the Coalition": "Duel Decks: Phyrexia vs The Coalition",
+    "Duel Decks: Zendikar vs. Eldrazi": "Duel Decks: Zendikar vs Eldrazi",
 
     "Theros Beyond Death": "Theros: Beyond Death",
     "Revised Edition": "Revised",
@@ -33,9 +35,12 @@
     "GRN Guild Kit": "Guilds of Ravnica Guild Kits",
     "RNA Guild Kit": "Ravnica Allegiance Guild Kits",
 
+    "Premium Deck Series: Slivers": "Premium Deck - Slivers",
+
     "Fourth Edition": "4th Edition",
     "Fifth Edition": "5th Edition",
     "Sixth Edition": "6th Edition",
+    "Classic Sixth Edition": "6th Edition",
     "Seventh Edition": "7th Edition",
     "Eighth Edition": "8th Edition",
     "Ninth Edition": "9th Edition",
@@ -52,9 +57,11 @@
     "Magic Origins Promos": "Release",
     "Journey into Nyx Promos": "Release",
 
+    "Love Your LGS": "Specialare",
     "Theros Promos": "Specialare",
     "Tarkir Dragonfury": "Specialare",
 
+    "Guilds of Ravnica Promos": "Prerelease",
     "Dominaria Promos": "Prerelease",
     "Ikoria: Lair of Behemoths Promos": "Prerelease",
     "Shadows over Innistrad Promos": "Prerelease",
