@@ -40,3 +40,15 @@ Where `index` is the cell positional index and `row` is the whole row of that ca
 
 ### translation.json
 SVM differs a bit on how it names some cards and sets, this file is to translate from other common formats into the format that SVM expects.
+
+
+## Workflow proposal 
+Before you can do anything with this you would need to have your cards in a CSV format. I have found the easiest and fastest way to do this is to use a app for your phone that can scan cards. The one I use is called Delver Lens and this is how I use it.
+
+1. Sort my cards into expansions (this helps reduce wrong scans and removes the need to change it afterwards)
+2. Set my phone on a tripod (I a cheap GorillaPod) and angle it downwards
+3. Put a white paper under it.
+4. Set the expansion in the scan setting
+5. Scan your cards
+6. Export your new list as csv and then run the script on it.
+7. Upload the converted file into SVM.
