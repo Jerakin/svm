@@ -1,6 +1,6 @@
 # SvenskaMagic - CSV Converter
 
-This is a quick converter for [SvenskaMagic.com](https://www.svenskamagic.com) a Swedish Magic the Gathering community.
+This is a converter for [SvenskaMagic.com](https://www.svenskamagic.com) a Swedish Magic the Gathering community.
 
 The intent with the script is to quickly be able to convert a CSV file from a different source than SVM into the format SVM expects.
 
@@ -52,3 +52,6 @@ Before you can do anything with this you would need to have your cards in a CSV 
 5. Scan your cards
 6. Export your new list as csv and then run the script on it.
 7. Upload the converted file into SVM.
+
+# Moxfield format
+You can export your collection from [SVM](https://www.svenskamagic.com/profil/export-and-import.php) and then run that have/want file through the moxfield converter to be able to upload the list there. See the `example/moxfield.py`-
